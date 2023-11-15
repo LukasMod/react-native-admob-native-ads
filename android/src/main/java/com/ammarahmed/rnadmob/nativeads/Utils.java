@@ -79,11 +79,8 @@ public class Utils {
     }
 
     public static void setMediaAspectRatio(int type, NativeAdOptions.Builder adOptions) {
-        adOptions.setMediaAspectRatio(type);
-    }
 
-    public static void setMediationOptions(ReadableMap options, AdManagerAdRequest.Builder adRequest) {
-        if (options == null) return;
+        adOptions.setMediaAspectRatio(type);
     }
 
     public static void setRequestNonPersonalizedAdsOnly(boolean npa, AdManagerAdRequest.Builder adRequest) {
