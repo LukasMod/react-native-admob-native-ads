@@ -8,7 +8,7 @@
 #import <React/RCTUIManagerUtils.h>
 
 #ifdef MEDIATION_FACEBOOK
-@import FacebookAdapter;
+@import MetaAdapter;
 #endif
 
 @implementation RNGADNativeView : GADNativeAdView
@@ -111,6 +111,14 @@ BOOL *nonPersonalizedAds;
 
     if ([allKeys containsObject:@"customTargeting"]) {
         [adRequest setCustomTargeting:(NSDictionary *) [targetingOptions objectForKey:@"customTargeting"]];
+
+    if ([allKeys containsObject:@"targets"]) {
+        NSArray *array = [targetingOptions objectForKey:@"targets"];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        for (NSDictionary *object in array) {
+            [dic setValue:[object valueForKey:@"key"] forKey:[object valueForKey:@"value"]];
+        }
+        [adRequest setCustomTargeting:dic];
     }
 
     if ([allKeys containsObject:@"categoryExclusions"]) {
