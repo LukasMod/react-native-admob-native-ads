@@ -31,6 +31,21 @@ public class Utils {
                 }
             }
         }
+        if (options.hasKey("targets")) {
+            ReadableArray targets = options.getArray("targets");
+
+            for (int i = 0; i < targets.size(); i++) {
+                ReadableMap target = targets.getMap(i);
+                String key = target.getString("key");
+                if (target.getType("value") == ReadableType.Array) {
+                    List list = Arguments.toList(target.getArray("value"));
+
+                    adRequest.addCustomTargeting(key, list);
+                } else {
+                    adRequest.addCustomTargeting(customTargetingArray[i].key, customTargetingArray[i].value);
+                }
+            }
+        }
         if (options.hasKey("categoryExclusions")) {
             ReadableArray categoryExclusions = options.getArray("categoryExclusions");
             for (int i = 0; i < categoryExclusions.size(); i++) {
@@ -79,11 +94,8 @@ public class Utils {
     }
 
     public static void setMediaAspectRatio(int type, NativeAdOptions.Builder adOptions) {
-        adOptions.setMediaAspectRatio(type);
-    }
 
-    public static void setMediationOptions(ReadableMap options, AdManagerAdRequest.Builder adRequest) {
-        if (options == null) return;
+        adOptions.setMediaAspectRatio(type);
     }
 
     public static void setRequestNonPersonalizedAdsOnly(boolean npa, AdManagerAdRequest.Builder adRequest) {
